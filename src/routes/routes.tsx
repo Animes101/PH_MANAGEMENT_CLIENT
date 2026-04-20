@@ -4,16 +4,89 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 
 
 
+
+// ADMIN
+// import AdminUsers from "../pages/admin/AdminUsers";
+// import CreateCourse from "../pages/admin/CreateCourse";
+// import AdminReports from "../pages/admin/AdminReports";
+// import AdminSettings from "../pages/admin/AdminSettings";
+
+// // FACULTY
+// import FacultyDashboard from "../pages/faculty/FacultyDashboard";
+// import FacultyCourses from "../pages/faculty/FacultyCourses";
+// import CreateAssignment from "../pages/faculty/CreateAssignment";
+// import FacultyStudents from "../pages/faculty/FacultyStudents";
+
+// // STUDENT
+// import StudentDashboard from "../pages/student/StudentDashboard";
+// import StudentCourses from "../pages/student/StudentCourses";
+// import StudentTasks from "../pages/student/StudentTasks";
+// import StudentProfile from "../pages/student/StudentProfile";
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+
     children: [
+      // 🔥 ADMIN ROUTES
       {
-        index: true,
+        path: "admin/dashboard",
         element:<AdminDashboard />
-       
+        
       },
+      // {
+      //   path: "admin/users",
+      //   element: <AdminUsers />,
+      // },
+      // {
+      //   path: "admin/courses/create",
+      //   element: <CreateCourse />,
+      // },
+      // {
+      //   path: "admin/reports",
+      //   element: <AdminReports />,
+      // },
+      // {
+      //   path: "admin/settings",
+      //   element: <AdminSettings />,
+      // },
+
+      // // 🔥 FACULTY ROUTES
+      // {
+      //   path: "faculty/dashboard",
+      //   element: <FacultyDashboard />,
+      // },
+      // {
+      //   path: "faculty/courses",
+      //   element: <FacultyCourses />,
+      // },
+      // {
+      //   path: "faculty/assignments/create",
+      //   element: <CreateAssignment />,
+      // },
+      // {
+      //   path: "faculty/students",
+      //   element: <FacultyStudents />,
+      // },
+
+      // // 🔥 STUDENT ROUTES
+      // {
+      //   path: "student/dashboard",
+      //   element: <StudentDashboard />,
+      // },
+      // {
+      //   path: "student/courses",
+      //   element: <StudentCourses />,
+      // },
+      // {
+      //   path: "student/tasks",
+      //   element: <StudentTasks />,
+      // },
+      // {
+      //   path: "student/profile",
+      //   element: <StudentProfile />,
+      // },
     ],
   },
 ]);
