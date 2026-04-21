@@ -21,6 +21,7 @@ const Sidebar = () => {
     name: "User Management",
     children: [
       { name: "Users", path: "/admin/users" },
+      {name:'Create Studnet', path:'/admin/create-student'},
     ],
   },
 
@@ -116,7 +117,7 @@ student: [
 
                 {openMenu === item.name && (
                   <ul className="ml-4 mt-1 space-y-1">
-                    {item.children.map((sub) => (
+                    {item?.children?.map((sub) => (
                       <li key={sub.path}>
                         <NavLink
                           to={sub.path}
@@ -145,3 +146,5 @@ student: [
 };
 
 export default Sidebar;
+
+

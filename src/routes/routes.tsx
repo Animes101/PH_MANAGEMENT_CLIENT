@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../components/utils/MainLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import LoginPage from "../pages/LoginPage";
+import MainLayout from "../components/utils/MainLayout";
 
 
 
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
     children: [
       // 🔥 ADMIN ROUTES
       {
+        
         path: "admin/dashboard",
         element:<AdminDashboard />
         
@@ -88,5 +90,10 @@ export const router = createBrowserRouter([
       //   element: <StudentProfile />,
       // },
     ],
+    
   },
+  {
+    path:'/login',
+    element:<LoginPage />
+  }
 ]);
