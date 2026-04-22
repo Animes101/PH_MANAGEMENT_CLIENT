@@ -1,6 +1,17 @@
 import { useState } from "react";
-import { useAppDispatch } from "../redux/middlwere/hooks";
 import { useLoginMutation } from "../redux/fetures/auth/authApi";
+import { useAppDispatch } from "../redux/middlwere/hooks";
+import { setUser } from "../redux/fetures/auth/authSlice";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
+
+type TJwtPayload = {
+  userId: string;
+  userRole: string;
+  iat?: number;
+  exp?: number;
+};
 
 const LoginPage = () => {
   const [userId, setUserId] = useState("");
@@ -8,12 +19,16 @@ const LoginPage = () => {
   const [showForgot, setShowForgot] = useState(false);
   const [email, setEmail] = useState("");
 
-  const [login, {data, error}]=useLoginMutation();
+  const navigate=useNavigate()
+
+  const [login, { error}]=useLoginMutation();
+  const dispatch=useAppDispatch();
 
 
 
 
-  const handleLogin = (e: React.FormEvent) => {
+
+  const handleLogin =async (e: React.FormEvent) => {
     e.preventDefault();
 
     // API / Redux logic here
@@ -21,18 +36,34 @@ const LoginPage = () => {
     const loginData={
       body:{
         id:userId,
-          password
+        password
       }
     }
 
-    login(loginData)
+       const res = await login(loginData).unwrap();
 
-    console.log(error)
-    console.log(loginData)
+      const token = res?.data?.accessToken;
+
+      const userDecod = jwtDecode<TJwtPayload>(token);
+      
+
+      const user={
+        id:userDecod.userId,
+        role:userDecod.userRole
+      }
+
+
+      dispatch(setUser({
+        user,
+        accessToken: token
+      }));
+
+      navigate('/')
+
+
 
   };
 
-  console.log(data)
 
   const handleForgotPassword = (e: React.FormEvent) => {
     e.preventDefault();

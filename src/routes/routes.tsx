@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import LoginPage from "../pages/LoginPage";
 import MainLayout from "../components/utils/MainLayout";
-
+import ProtectedRoute from "../components/utils/protectedRoute";
 
 
 
@@ -27,14 +27,14 @@ import MainLayout from "../components/utils/MainLayout";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element:<MainLayout />,
 
     children: [
       // 🔥 ADMIN ROUTES
       {
         
         path: "admin/dashboard",
-        element:<AdminDashboard />
+        element:<ProtectedRoute><AdminDashboard /></ProtectedRoute>
         
       },
       // {
