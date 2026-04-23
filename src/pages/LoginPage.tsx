@@ -4,6 +4,7 @@ import { useAppDispatch } from "../redux/middlwere/hooks";
 import { setUser } from "../redux/fetures/auth/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 
 type TJwtPayload = {
@@ -21,48 +22,49 @@ const LoginPage = () => {
 
   const navigate=useNavigate()
 
-  const [login, { error}]=useLoginMutation();
-  const dispatch=useAppDispatch();
+const [login] = useLoginMutation();
+const dispatch = useAppDispatch();
 
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-
-
-
-  const handleLogin =async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // API / Redux logic here
-
-    const loginData={
-      body:{
-        id:userId,
-        password
-      }
-    }
-
-       const res = await login(loginData).unwrap();
-
-      const token = res?.data?.accessToken;
-
-      const userDecod = jwtDecode<TJwtPayload>(token);
-      
-
-      const user={
-        id:userDecod.userId,
-        role:userDecod.userRole
-      }
-
-
-      dispatch(setUser({
-        user,
-        accessToken: token
-      }));
-
-      navigate('/')
-
-
-
+  const loginData = {
+    body: {
+      id: userId,
+      password,
+    },
   };
+
+  try {
+    const res = await login(loginData).unwrap();
+
+    const token = res?.data?.accessToken;
+
+    const userDecod = jwtDecode<TJwtPayload>(token);
+
+    const user = {
+      id: userDecod.userId,
+      role: userDecod.userRole,
+    };
+
+    dispatch(
+      setUser({
+        user,
+        accessToken: token,
+      })
+    );
+
+    toast.success("Login Success");
+    navigate(`/${user.role}/dashboard`);
+  } catch (err: any) {
+    
+    // backend message show
+    const message =
+      err?.data?.message || "Login Failed ❌";
+
+    toast.error(message);
+  }
+};
 
 
   const handleForgotPassword = (e: React.FormEvent) => {

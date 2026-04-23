@@ -3,6 +3,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import LoginPage from "../pages/LoginPage";
 import MainLayout from "../components/utils/MainLayout";
 import ProtectedRoute from "../components/utils/protectedRoute";
+import AcademinSemester from "../pages/admin/academinManagement/AcademinSemester";
 
 
 
@@ -27,20 +28,20 @@ import ProtectedRoute from "../components/utils/protectedRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element:<MainLayout />,
+    element:<ProtectedRoute><MainLayout /></ProtectedRoute>,
 
     children: [
       // 🔥 ADMIN ROUTES
       {
         
         path: "admin/dashboard",
-        element:<ProtectedRoute><AdminDashboard /></ProtectedRoute>
+        element:<AdminDashboard />
         
       },
-      // {
-      //   path: "admin/users",
-      //   element: <AdminUsers />,
-      // },
+      {
+        path: "/admin/all-semester",
+        element: <AcademinSemester />
+      },
       // {
       //   path: "admin/courses/create",
       //   element: <CreateCourse />,

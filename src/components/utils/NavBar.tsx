@@ -26,9 +26,9 @@ const Sidebar = () => {
   },
 
   {
-    name: "Course Management",
+    name: "Ac Management",
     children: [
-      { name: "Create Course", path: "/admin/courses/create" },
+      { name: "All Semester", path: "/admin/all-semester" },
     ],
   },
 
