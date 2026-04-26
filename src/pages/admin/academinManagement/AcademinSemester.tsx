@@ -2,13 +2,24 @@ import React from "react";
 import { useGetAllSemesterQuery } from "../../../redux/fetures/academicSemester/academinSemesterApi";
 
 const AcademinSemester = () => {
-  const { data, isLoading } = useGetAllSemesterQuery("");
+  const { data, isLoading, error } = useGetAllSemesterQuery("");
 
   if (isLoading) {
     return <div className="text-center mt-10">Loading...</div>;
   }
 
   const semesters = data?.data || [];
+
+  if (error) {
+  const errMsg =
+    (error as any)?.data?.message || "Something went wrong";
+
+  return (
+    <div className="text-center mt-10 text-red-500">
+      <h2 className="text-xl font-semibold">Error: {errMsg}</h2>
+    </div>
+  );
+}
 
   return (
     <div className="p-6">
