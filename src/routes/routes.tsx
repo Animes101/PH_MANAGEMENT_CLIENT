@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import MainLayout from "../components/utils/MainLayout";
 import ProtectedRoute from "../components/utils/protectedRoute";
 import AcademinSemester from "../pages/admin/academinManagement/AcademinSemester";
+import CreateSemesterForm from "../pages/admin/academinManagement/CreateSemester";
 
 
 
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
         path: "/admin/all-semester",
         element: <AcademinSemester />
       },
+      {
+        path:'/admin/create-semester',
+        element:<CreateSemesterForm />
+      }
       // {
       //   path: "admin/courses/create",
       //   element: <CreateCourse />,
