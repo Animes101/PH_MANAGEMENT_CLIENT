@@ -5,6 +5,9 @@ import MainLayout from "../components/utils/MainLayout";
 import ProtectedRoute from "../components/utils/protectedRoute";
 import AcademinSemester from "../pages/admin/academinManagement/AcademinSemester";
 import CreateSemesterForm from "../pages/admin/academinManagement/CreateSemester";
+import FacalitiDeshboard from "../pages/facaliti/FacalitiDeshboard";
+import StudentDeshboard from "../pages/student/StudentDeshboard";
+import CreateAcademinFacality from "../pages/admin/academinManagement/createAcademinFacality";
 
 
 
@@ -46,25 +49,19 @@ export const router = createBrowserRouter([
       {
         path:'/admin/create-semester',
         element:<CreateSemesterForm />
-      }
-      // {
-      //   path: "admin/courses/create",
-      //   element: <CreateCourse />,
-      // },
-      // {
-      //   path: "admin/reports",
-      //   element: <AdminReports />,
-      // },
-      // {
-      //   path: "admin/settings",
-      //   element: <AdminSettings />,
-      // },
+      },
+  
 
       // // 🔥 FACULTY ROUTES
-      // {
-      //   path: "faculty/dashboard",
-      //   element: <FacultyDashboard />,
-      // },
+      {
+        path: "/faculity/dashboard",
+        element: <FacalitiDeshboard />,
+      },
+      {
+        path:'/admin/create-FAcality',
+        element:<CreateAcademinFacality />
+
+      },
       // {
       //   path: "faculty/courses",
       //   element: <FacultyCourses />,
@@ -79,10 +76,10 @@ export const router = createBrowserRouter([
       // },
 
       // // 🔥 STUDENT ROUTES
-      // {
-      //   path: "student/dashboard",
-      //   element: <StudentDashboard />,
-      // },
+      {
+        path: "student/dashboard",
+        element: <StudentDeshboard />,
+      },
       // {
       //   path: "student/courses",
       //   element: <StudentCourses />,

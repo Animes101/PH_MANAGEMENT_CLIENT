@@ -30,6 +30,7 @@ const Sidebar = () => {
     children: [
       { name: "All Semester", path: "/admin/all-semester" },
       { name: "create Semester", path: "/admin/create-semester" },
+      { name: "create Facality", path: "/admin/create-FAcality" },
     ],
   },
 

@@ -1,131 +1,263 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
+import { useCreateSemesterMutation } from "../../../redux/fetures/academicSemester/academinSemesterApi";
 
-const semesterOptions = [
-  {
-    name: "Summer",
-    code: "02",
-  },
-  {
-    name: "Autumn",
-    code: "01",
-  },
-  {
-    name: "Fall",
-    code: "03",
-  },
+/* ================= TYPES ================= */
+
+type TMonth =
+  | "January"
+  | "February"
+  | "March"
+  | "April"
+  | "May"
+  | "June"
+  | "July"
+  | "August"
+  | "September"
+  | "October"
+  | "November"
+  | "December";
+
+type TSemesterName = "Autumn" | "Summer" | "Fall";
+type TSemesterCode = "01" | "02" | "03";
+
+interface IAcademicSemister {
+  name: TSemesterName;
+  code: TSemesterCode;
+  year: number;
+  startMonth: TMonth;
+  endMonth: TMonth;
+}
+
+/* ================= DATA ================= */
+
+const semesterOptions: {
+  name: TSemesterName;
+  code: TSemesterCode;
+}[] = [
+  { name: "Summer", code: "02" },
+  { name: "Autumn", code: "01" },
+  { name: "Fall", code: "03" },
 ];
 
+const monthOptions: TMonth[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/* ================= COMPONENT ================= */
+
 const CreateSemesterForm = () => {
-  const [selectedName, setSelectedName] = useState("");
+  const [addAcademinSemester, { isLoading }] =
+    useCreateSemesterMutation();
+
+  const [selectedName, setSelectedName] =
+    useState<TSemesterName | "">("");
+
   const [year, setYear] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startMonth, setStartMonth] =
+    useState<TMonth | "">("");
+
+  const [endMonth, setEndMonth] =
+    useState<TMonth | "">("");
 
   const selectedSemester = semesterOptions.find(
     (item) => item.name === selectedName
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedName(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     const semesterData = {
-      name: selectedName,
-      code: selectedSemester?.code || "",
-      year,
-      startDate,
-      endDate,
+      data: {
+        name: selectedName as TSemesterName,
+        code: selectedSemester?.code as TSemesterCode,
+        year: Number(year),
+        startMonth: startMonth as TMonth,
+        endMonth: endMonth as TMonth,
+      },
     };
 
-    console.log(semesterData);
+    try {
+      await addAcademinSemester(
+        semesterData
+      ).unwrap();
+
+      toast.success("Semester Created Successfully");
+
+      setSelectedName("");
+      setYear("");
+      setStartMonth("");
+      setEndMonth("");
+    } catch (err: any) {
+      toast.error(
+        err?.data?.message || "Something went wrong"
+      );
+    }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-10 p-6 rounded-xl shadow-lg bg-blue-50 border border-blue-100"
-    >
-      <h2 className="text-2xl font-bold mb-6 text-blue-700 text-center">
-        Create Semester
-      </h2>
-
-      {/* Name Dropdown */}
-      <div className="mb-4">
-        <label className="block mb-1 font-medium text-gray-700">
-          Semester Name
-        </label>
-        <select
-          value={selectedName}
-          onChange={handleChange}
-          className="w-full border border-blue-200 px-3 py-2 rounded-lg bg-white"
-        >
-          <option value="">Select Semester</option>
-          {semesterOptions.map((item) => (
-            <option key={item.code} value={item.name}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Code */}
-      <div className="mb-4">
-        <label className="block mb-1 font-medium text-gray-700">Code</label>
-        <input
-          type="text"
-          value={selectedSemester?.code || ""}
-          readOnly
-          className="w-full border border-blue-200 px-3 py-2 rounded-lg bg-blue-100"
-        />
-      </div>
-
-      {/* Year */}
-      <div className="mb-4">
-        <label className="block mb-1 font-medium text-gray-700">Year</label>
-        <input
-          type="text"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          placeholder="Enter Year"
-          className="w-full border border-blue-200 px-3 py-2 rounded-lg bg-white"
-        />
-      </div>
-
-      {/* Start Date */}
-      <div className="mb-4">
-        <label className="block mb-1 font-medium text-gray-700">
-          Start Date
-        </label>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          className="w-full border border-blue-200 px-3 py-2 rounded-lg bg-white"
-        />
-      </div>
-
-      {/* End Date */}
-      <div className="mb-4">
-        <label className="block mb-1 font-medium text-gray-700">End Date</label>
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          className="w-full border border-blue-200 px-3 py-2 rounded-lg bg-white"
-        />
-      </div>
-
-      {/* Submit */}
-      <button
-        type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg mt-2"
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-indigo-100 flex items-center justify-center px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-xl bg-white shadow-2xl rounded-3xl p-8 border border-gray-100"
       >
-        Submit
-      </button>
-    </form>
+        <h2 className="text-3xl font-bold text-center text-blue-700 mb-2">
+          Create Semester
+        </h2>
+
+        <p className="text-center text-gray-500 mb-8">
+          Fill all information carefully
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {/* Semester Name */}
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Semester Name
+            </label>
+
+            <select
+              value={selectedName}
+              onChange={(e) =>
+                setSelectedName(
+                  e.target.value as TSemesterName
+                )
+              }
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">
+                Select Semester
+              </option>
+
+              {semesterOptions.map((item) => (
+                <option
+                  key={item.code}
+                  value={item.name}
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Code */}
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Semester Code
+            </label>
+
+            <input
+              type="text"
+              readOnly
+              value={selectedSemester?.code || ""}
+              placeholder="Auto"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-100"
+            />
+          </div>
+
+          {/* Year */}
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Year
+            </label>
+
+            <input
+              type="number"
+              placeholder="2026"
+              value={year}
+              onChange={(e) =>
+                setYear(e.target.value)
+              }
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Start Month */}
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Start Month
+            </label>
+
+            <select
+              value={startMonth}
+              onChange={(e) =>
+                setStartMonth(
+                  e.target.value as TMonth
+                )
+              }
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">
+                Select Month
+              </option>
+
+              {monthOptions.map((month) => (
+                <option
+                  key={month}
+                  value={month}
+                >
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* End Month */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              End Month
+            </label>
+
+            <select
+              value={endMonth}
+              onChange={(e) =>
+                setEndMonth(
+                  e.target.value as TMonth
+                )
+              }
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">
+                Select Month
+              </option>
+
+              {monthOptions.map((month) => (
+                <option
+                  key={month}
+                  value={month}
+                >
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full mt-8 bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white font-semibold py-3 rounded-xl shadow-md disabled:bg-gray-400"
+        >
+          {isLoading
+            ? "Submitting..."
+            : "Create Semester"}
+        </button>
+      </form>
+    </div>
   );
 };
 
