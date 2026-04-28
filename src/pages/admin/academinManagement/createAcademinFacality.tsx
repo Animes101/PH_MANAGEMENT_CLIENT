@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useCreateAcdeminFacalityMutation } from "../../../redux/fetures/academinFacality/academinFacalityApi";
+import { toast } from "sonner";
 
 export type IAcademicFaculty = {
   name: string;
@@ -12,18 +14,28 @@ const facultyOptions: IAcademicFaculty[] = [
 ];
 
 const CreateAcademinFacality = () => {
+
+  const [createAcademinFacality]=useCreateAcdeminFacalityMutation();
   const [selectedFaculty, setSelectedFaculty] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const data: IAcademicFaculty = {
       name: selectedFaculty,
     };
 
-    console.log(data);
+    try{
+       await createAcademinFacality(
+               data
+             ).unwrap();
+       
+             toast.success("Semester Created Successfully");
 
-    // backend এ send করবা
+    }catch(err:any){
+
+      toast.error( err?.data?.message || "somthing webt worng");
+    }
   };
 
   return (

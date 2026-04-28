@@ -8,6 +8,7 @@ import CreateSemesterForm from "../pages/admin/academinManagement/CreateSemester
 import FacalitiDeshboard from "../pages/facaliti/FacalitiDeshboard";
 import StudentDeshboard from "../pages/student/StudentDeshboard";
 import CreateAcademinFacality from "../pages/admin/academinManagement/createAcademinFacality";
+import NotFoundPage from "../pages/NotFoundPage";
 
 
 
@@ -98,5 +99,9 @@ export const router = createBrowserRouter([
   {
     path:'/login',
     element:<LoginPage />
+  },
+  {
+    path:'*',
+    element:<NotFoundPage />
   }
 ]);
