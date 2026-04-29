@@ -9,26 +9,10 @@ import FacalitiDeshboard from "../pages/facaliti/FacalitiDeshboard";
 import StudentDeshboard from "../pages/student/StudentDeshboard";
 import CreateAcademinFacality from "../pages/admin/academinManagement/createAcademinFacality";
 import NotFoundPage from "../pages/NotFoundPage";
+import CreateDepartMent from "../pages/admin/academinManagement/CreateDepartMent";
+import CreateStudnet from "../pages/admin/userManagment/CreateStudnet";
 
 
-
-// ADMIN
-// import AdminUsers from "../pages/admin/AdminUsers";
-// import CreateCourse from "../pages/admin/CreateCourse";
-// import AdminReports from "../pages/admin/AdminReports";
-// import AdminSettings from "../pages/admin/AdminSettings";
-
-// // FACULTY
-// import FacultyDashboard from "../pages/faculty/FacultyDashboard";
-// import FacultyCourses from "../pages/faculty/FacultyCourses";
-// import CreateAssignment from "../pages/faculty/CreateAssignment";
-// import FacultyStudents from "../pages/faculty/FacultyStudents";
-
-// // STUDENT
-// import StudentDashboard from "../pages/student/StudentDashboard";
-// import StudentCourses from "../pages/student/StudentCourses";
-// import StudentTasks from "../pages/student/StudentTasks";
-// import StudentProfile from "../pages/student/StudentProfile";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +34,14 @@ export const router = createBrowserRouter([
       {
         path:'/admin/create-semester',
         element:<CreateSemesterForm />
+      },
+      {
+        path:'/admin/create-department',
+        element:<CreateDepartMent />
+      },
+      {
+        path:'/admin/create-student',
+        element:<CreateStudnet />
       },
   
 

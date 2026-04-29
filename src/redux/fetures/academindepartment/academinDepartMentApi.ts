@@ -2,17 +2,16 @@ import baseApi from "../../api/baseApi";
 
 const academinSemesterApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({ 
-    createAcdeminFacality: builder.mutation({
+    addDepartment: builder.mutation({
       query: (data) => ({
-        url: "/create-faculty",
+        url: "/create-AcademinDepartment",
         method: "POST",
         body: data,
       }),
     }),
-
-    agetAllFacality: builder.query({
+    agetAllDepartment: builder.query({
       query: () => ({
-        url: "/get-all-faculty",
+        url: "/get-all-AcademinDepartment",
         method: "GET",
       }),
     }),
@@ -20,6 +19,7 @@ const academinSemesterApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useCreateAcdeminFacalityMutation,
-  useAgetAllFacalityQuery
+  useAddDepartmentMutation,
+  useAgetAllDepartmentQuery
+  
 } = academinSemesterApi;
