@@ -11,6 +11,7 @@ import CreateAcademinFacality from "../pages/admin/academinManagement/createAcad
 import NotFoundPage from "../pages/NotFoundPage";
 import CreateDepartMent from "../pages/admin/academinManagement/CreateDepartMent";
 import CreateStudnet from "../pages/admin/userManagment/CreateStudnet";
+import Students from "../pages/admin/userManagment/Students";
 
 
 
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path:'/admin/create-student',
         element:<CreateStudnet />
+      },
+      {
+        path:"/admin/all-Student",
+        element:<Students />
       },
   
 

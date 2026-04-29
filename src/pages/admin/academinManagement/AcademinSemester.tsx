@@ -12,6 +12,10 @@ const AcademinSemester = () => {
   }
 
   const semesters = data?.data || [];
+  const metaData=data || []
+
+  console.log(metaData)
+
 
   if (error) {
     const errMsg = (error as any)?.data?.message || "Something went wrong";
