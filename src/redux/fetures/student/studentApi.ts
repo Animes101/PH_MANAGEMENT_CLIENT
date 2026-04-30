@@ -4,7 +4,7 @@ const academinSemesterApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({ 
     createStudent: builder.mutation({
       query: (data) => ({
-        url: "/create-faculty",
+        url: "/user/create-Student",
         method: "POST",
         body: data,
       }),

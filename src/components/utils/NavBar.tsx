@@ -20,8 +20,8 @@ const Sidebar = () => {
   {
     name: "User Management",
     children: [
-      { name: "Users", path: "/admin/users" },
       {name:'Create Studnet', path:'/admin/create-student'},
+      { name: "All Students", path: "/admin/all-Student" },
     ],
   },
 
@@ -35,7 +35,6 @@ const Sidebar = () => {
       { name: "create Create Student", path: "/admin/create-Student" },
       { name: "create  Create Corse", path: "/admin/create-corse" },
       { name: "create Create Offer Corse", path: "/admin/create-offerCorse" },
-      { name: "All Students", path: "/admin/all-Student" },
     ],
   },
 
