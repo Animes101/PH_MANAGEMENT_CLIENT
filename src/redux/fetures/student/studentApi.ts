@@ -11,10 +11,17 @@ const academinSemesterApi = baseApi.injectEndpoints({
     }),
 
     getAllStudent: builder.query({
-      query: () => ({
+      query: (args) => {
+        const searchParams= new URLSearchParams()
+
+        searchParams.append("limit", args[0]);
+     
+
+        return {
         url: "/getStudent",
         method: "GET",
-      }),
+        params:searchParams
+      }},
     }),
   }),
 });

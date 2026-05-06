@@ -4,10 +4,14 @@ import { useGetAllStudentQuery } from "../../../redux/fetures/student/studentApi
 const Students = () => {
   const [page, setPage] = React.useState(1);
 
-  const { data, isLoading, isError } = useGetAllStudentQuery(page);
+  console.log(page);
+
+  const { data, isLoading, isError } = useGetAllStudentQuery(['5']);
 
   const students = data?.data?.data || [];
   const meta = data?.data?.meta;
+
+  console.log(meta)
 
   const handleDelete = async (id) => {
     console.log("Delete:", id);
