@@ -28,17 +28,10 @@ const studentApi = baseApi.injectEndpoints({
       },
     }),
 
-    deleteStudent: builder.mutation({
-      query: (id) => ({
-        url: `/student/${id}`,
-        method: "DELETE",
-      }),
-    }),
   }),
 });
 
 export const {
   useCreateStudentMutation,
   useGetAllStudentQuery,
-  useDeleteStudentMutation,
 } = studentApi;

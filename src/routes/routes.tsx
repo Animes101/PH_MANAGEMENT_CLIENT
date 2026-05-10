@@ -12,6 +12,8 @@ import NotFoundPage from "../pages/NotFoundPage";
 import CreateDepartMent from "../pages/admin/academinManagement/CreateDepartMent";
 import CreateStudnet from "../pages/admin/userManagment/CreateStudnet";
 import Students from "../pages/admin/userManagment/Students";
+import CreateCorse from "../pages/admin/academinManagement/CreateCorse";
+import CreateOfferCorse from "../pages/admin/academinManagement/CreateOfferCorse";
 
 
 
@@ -47,6 +49,14 @@ export const router = createBrowserRouter([
       {
         path:"/admin/all-Student",
         element:<Students />
+      },
+      {
+        path:"/admin/create-corse",
+        element:<CreateCorse />
+      },
+      {
+        path:"/admin/create-offer-corse",
+        element:<CreateOfferCorse />
       },
   
 
