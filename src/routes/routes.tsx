@@ -14,6 +14,7 @@ import CreateStudnet from "../pages/admin/userManagment/CreateStudnet";
 import Students from "../pages/admin/userManagment/Students";
 import CreateCorse from "../pages/admin/academinManagement/CreateCorse";
 import CreateOfferCorse from "../pages/admin/academinManagement/CreateOfferCorse";
+import CreateRegisterCorse from "../pages/admin/academinManagement/CreateRegisterCorse";
 
 
 
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path:"/admin/create-offer-corse",
         element:<CreateOfferCorse />
+      },
+      {
+        path:"/admin/create-register-corse",
+        element:<CreateRegisterCorse />
       },
   
 
