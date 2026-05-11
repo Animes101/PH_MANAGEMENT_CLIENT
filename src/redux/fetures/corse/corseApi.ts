@@ -4,15 +4,15 @@ import baseApi from "../../api/baseApi";
 
 const studentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createStudent: builder.mutation({
+    createCorse: builder.mutation({
       query: (data) => ({
-        url: "/user/create-Student",
+        url: "/create-corse",
         method: "POST",
         body: data,
       }),
     }),
 
-    getAllStudent: builder.query({
+    getAllCorse: builder.query({
       query: (args) => {
         const searchParams = new URLSearchParams();
         if (args?.length > 0) {
@@ -21,7 +21,7 @@ const studentApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/getStudent",
+          url: "/get-allCorse",
           method: "GET",
           params: searchParams,
         };
@@ -32,6 +32,6 @@ const studentApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useCreateStudentMutation,
-  useGetAllStudentQuery,
+  useCreateCorseMutation,
+  useGetAllCorseQuery,
 } = studentApi;
