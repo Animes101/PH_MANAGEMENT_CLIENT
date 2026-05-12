@@ -15,6 +15,7 @@ import Students from "../pages/admin/userManagment/Students";
 import CreateCorse from "../pages/admin/academinManagement/CreateCorse";
 import CreateOfferCorse from "../pages/admin/academinManagement/CreateOfferCorse";
 import CreateRegisterCorse from "../pages/admin/academinManagement/CreateRegisterCorse";
+import AllRegister from "../pages/admin/academinManagement/AllRegister";
 
 
 
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
       {
         path:"/admin/create-register-corse",
         element:<CreateRegisterCorse />
+      },
+      {
+        path:"/admin/all-registers",
+        element:<AllRegister />
       },
   
 

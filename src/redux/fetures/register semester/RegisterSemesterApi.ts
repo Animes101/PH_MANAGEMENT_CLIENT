@@ -1,5 +1,3 @@
-
-
 import baseApi from "../../api/baseApi";
 
 const studentApi = baseApi.injectEndpoints({
@@ -13,19 +11,19 @@ const studentApi = baseApi.injectEndpoints({
     }),
 
     getAllRegister: builder.query({
-      query: (args) => {
-        const searchParams = new URLSearchParams();
-        if (args?.length > 0) {
-          args.forEach((item: { name: string; value: string }) => {
-            if (item.value) searchParams.append(item.name, item.value);
-          });
-        }
-        return {
-          url: "/get-allRegister",
-          method: "GET",
-          params: searchParams,
-        };
-      },
+      query: () => ({
+        url: "/get-allRegister",
+        method: "GET",
+      }),
+    }),
+
+    // ✅ UPDATE API
+    updateRegisterSemester: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/update-register/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
     }),
   }),
 });
@@ -33,4 +31,5 @@ const studentApi = baseApi.injectEndpoints({
 export const {
   useCreateRegisterSemesterMutation,
   useGetAllRegisterQuery,
+  useUpdateRegisterSemesterMutation, // ✅ add this
 } = studentApi;
