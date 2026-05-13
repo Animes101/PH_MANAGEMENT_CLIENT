@@ -20,7 +20,7 @@ const teacherApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/getTeacher",
+          url: "/get-facality",
           method: "GET",
           params: searchParams,
         };
