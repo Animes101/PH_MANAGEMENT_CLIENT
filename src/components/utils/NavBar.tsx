@@ -36,6 +36,7 @@ const Sidebar = () => {
       { name: "Create Offer Corse", path: "/admin/create-offer-corse" },
       { name: "create register corse", path: "/admin/create-register-corse" },
       { name: "All Registers", path: "/admin/all-registers" },
+      { name: "Create Teacher", path: "/admin/create-teacher" },
     ],
   },
 

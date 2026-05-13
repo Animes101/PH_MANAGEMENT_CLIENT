@@ -1,6 +1,41 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
+
+// ================= APIs =================
+import { useGetAllSemesterQuery } from "../../../redux/fetures/academicSemester/academinSemesterApi";
+
+import { useAgetAllFacalityQuery } from "../../../redux/fetures/academinFacality/academinFacalityApi";
+
+import { useGetAllCorseQuery } from "../../../redux/fetures/corse/corseApi";
+
+import { useGetAllRegisterQuery } from "../../../redux/fetures/register semester/RegisterSemesterApi";
+
+import { useGetAllTeacherQuery } from "../../../redux/fetures/teacherApi";
+
+import { useCreateOfferCorseMutation } from "../../../redux/fetures/offerCorse/offerCorseApi";
 
 const CreateOfferCorse = () => {
+  // ================= GET APIs =================
+  const { data: semesterData, isLoading: semesterLoading } =
+    useGetAllSemesterQuery("");
+
+  const { data: facultyData, isLoading: facultyLoading } =
+    useAgetAllFacalityQuery("");
+
+  const { data: corseData, isLoading: corseLoading } =
+    useGetAllCorseQuery("");
+
+  const { data: teacherData, isLoading: teacherLoading } =
+    useGetAllTeacherQuery("");
+
+  const { data: registerSemesterData, isLoading: registerLoading } =
+    useGetAllRegisterQuery("");
+
+  // ================= CREATE API =================
+  const [createOfferCorse, { isLoading }] =
+    useCreateOfferCorseMutation();
+
+  // ================= STATE =================
   const [formData, setFormData] = useState({
     registationSementer: "",
     academinSemester: "",
@@ -14,7 +49,7 @@ const CreateOfferCorse = () => {
     endTime: "",
   });
 
-  // Input Handle
+  // ================= HANDLE CHANGE =================
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -24,9 +59,24 @@ const CreateOfferCorse = () => {
     }));
   };
 
-  // Submit Handle
-  const handleSubmit = (e) => {
+  // ================= SUBMIT =================
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validation
+    if (
+      !formData.registationSementer ||
+      !formData.academinSemester ||
+      !formData.academinFacaulty ||
+      !formData.corse ||
+      !formData.teacher ||
+      !formData.maxCapacity ||
+      !formData.minCapacity ||
+      !formData.startTime ||
+      !formData.endTime
+    ) {
+      return toast.error("All fields are required");
+    }
 
     const finalData = {
       ...formData,
@@ -34,18 +84,73 @@ const CreateOfferCorse = () => {
       minCapacity: Number(formData.minCapacity),
     };
 
-    console.log(finalData);
+    try {
+      const res = await createOfferCorse(
+        finalData
+      ).unwrap();
+
+      console.log(res);
+
+      toast.success("Offer Course Created Successfully");
+
+      // Reset Form
+      setFormData({
+        registationSementer: "",
+        academinSemester: "",
+        academinFacaulty: "",
+        corse: "",
+        teacher: "",
+        maxCapacity: "",
+        minCapacity: "",
+        days: "sunday",
+        startTime: "",
+        endTime: "",
+      });
+    } catch (error) {
+      console.log(error);
+
+      toast.error(
+        error?.data?.message || "Something went wrong"
+      );
+    }
   };
 
+  // ================= DATA =================
+  const semesters = semesterData?.data || [];
+
+  const faculties = facultyData?.data || [];
+
+  const corses = corseData?.data?.data || [];
+
+  const teachers = teacherData?.data?.data || [];
+
+  const registerSemesters =
+    registerSemesterData?.data || [];
+
+  // ================= LOADING =================
+  if (
+    semesterLoading ||
+    facultyLoading ||
+    corseLoading ||
+    teacherLoading ||
+    registerLoading
+  ) {
+    return (
+      <div className="text-center py-10 text-xl font-semibold">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-5xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">
-        Create Offer Corse
+        Create Offer Course
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-5"
+        className="grid grid-cols-1 md:grid-cols-2 gap-5"
       >
         {/* Registration Semester */}
         <div>
@@ -53,14 +158,25 @@ const CreateOfferCorse = () => {
             Registration Semester
           </label>
 
-          <input
-            type="text"
+          <select
             name="registationSementer"
             value={formData.registationSementer}
             onChange={handleChange}
-            placeholder="Enter Registration Semester Id"
             className="w-full border p-3 rounded-lg"
-          />
+          >
+            <option value="">
+              Select Registration Semester
+            </option>
+
+            {registerSemesters.map((item) => (
+              <option
+                key={item._id}
+                value={item._id}
+              >
+                {item.status}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Academic Semester */}
@@ -69,14 +185,25 @@ const CreateOfferCorse = () => {
             Academic Semester
           </label>
 
-          <input
-            type="text"
+          <select
             name="academinSemester"
             value={formData.academinSemester}
             onChange={handleChange}
-            placeholder="Enter Academic Semester Id"
             className="w-full border p-3 rounded-lg"
-          />
+          >
+            <option value="">
+              Select Academic Semester
+            </option>
+
+            {semesters.map((item) => (
+              <option
+                key={item._id}
+                value={item._id}
+              >
+                {item.name} - {item.year}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Academic Faculty */}
@@ -85,30 +212,52 @@ const CreateOfferCorse = () => {
             Academic Faculty
           </label>
 
-          <input
-            type="text"
+          <select
             name="academinFacaulty"
             value={formData.academinFacaulty}
             onChange={handleChange}
-            placeholder="Enter Academic Faculty Id"
             className="w-full border p-3 rounded-lg"
-          />
+          >
+            <option value="">
+              Select Faculty
+            </option>
+
+            {faculties.map((item) => (
+              <option
+                key={item._id}
+                value={item._id}
+              >
+                {item.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Course */}
         <div>
           <label className="block mb-1 font-medium">
-            Corse
+            Course
           </label>
 
-          <input
-            type="text"
+          <select
             name="corse"
             value={formData.corse}
             onChange={handleChange}
-            placeholder="Enter Corse Id"
             className="w-full border p-3 rounded-lg"
-          />
+          >
+            <option value="">
+              Select Course
+            </option>
+
+            {corses.map((item) => (
+              <option
+                key={item._id}
+                value={item._id}
+              >
+                {item.title}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Teacher */}
@@ -117,14 +266,25 @@ const CreateOfferCorse = () => {
             Teacher
           </label>
 
-          <input
-            type="text"
+          <select
             name="teacher"
             value={formData.teacher}
             onChange={handleChange}
-            placeholder="Enter Teacher Id"
             className="w-full border p-3 rounded-lg"
-          />
+          >
+            <option value="">
+              Select Teacher
+            </option>
+
+            {teachers.map((item) => (
+              <option
+                key={item._id}
+                value={item._id}
+              >
+                {item.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Max Capacity */}
@@ -210,12 +370,17 @@ const CreateOfferCorse = () => {
         </div>
 
         {/* Submit */}
-        <button
-          type="submit"
-          className="bg-green-600 text-white px-6 py-3 rounded-lg"
-        >
-          Create Offer Corse
-        </button>
+        <div className="md:col-span-2">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-green-600 text-white py-3 rounded-lg"
+          >
+            {isLoading
+              ? "Creating..."
+              : "Create Offer Course"}
+          </button>
+        </div>
       </form>
     </div>
   );
