@@ -4,20 +4,26 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import LoginPage from "../pages/LoginPage";
 import MainLayout from "../components/utils/MainLayout";
 import ProtectedRoute from "../components/utils/protectedRoute";
+
 import AcademinSemester from "../pages/admin/academinManagement/AcademinSemester";
 import CreateSemesterForm from "../pages/admin/academinManagement/CreateSemester";
 import FacalitiDeshboard from "../pages/facaliti/FacalitiDeshboard";
 import StudentDeshboard from "../pages/student/StudentDeshboard";
+
 import CreateAcademinFacality from "../pages/admin/academinManagement/createAcademinFacality";
 import NotFoundPage from "../pages/NotFoundPage";
+
 import CreateDepartMent from "../pages/admin/academinManagement/CreateDepartMent";
 import CreateStudnet from "../pages/admin/userManagment/CreateStudnet";
 import Students from "../pages/admin/userManagment/Students";
+
 import CreateCorse from "../pages/admin/academinManagement/CreateCorse";
 import CreateOfferCorse from "../pages/admin/academinManagement/CreateOfferCorse";
 import CreateRegisterCorse from "../pages/admin/academinManagement/CreateRegisterCorse";
 import AllRegister from "../pages/admin/academinManagement/AllRegister";
 import CrateTeacher from "../pages/admin/academinManagement/CrateTeacher";
+import Corse from "../pages/student/Corse";
+import Profile from "../pages/student/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +35,7 @@ export const router = createBrowserRouter([
     ),
 
     children: [
-      // 🔥 ADMIN ROUTES
+      // ================= ADMIN =================
       {
         path: "admin/dashboard",
         element: (
@@ -38,7 +44,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/all-semester",
         element: (
@@ -47,7 +52,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-semester",
         element: (
@@ -56,7 +60,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-department",
         element: (
@@ -65,7 +68,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-student",
         element: (
@@ -74,7 +76,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/all-Student",
         element: (
@@ -83,7 +84,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-corse",
         element: (
@@ -92,7 +92,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-offer-corse",
         element: (
@@ -101,7 +100,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-register-corse",
         element: (
@@ -110,7 +108,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/all-registers",
         element: (
@@ -119,7 +116,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-teacher",
         element: (
@@ -128,7 +124,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "admin/create-FAcality",
         element: (
@@ -138,7 +133,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 🔥 FACULTY ROUTES
+      // ================= FACULTY =================
       {
         path: "faculity/dashboard",
         element: (
@@ -148,7 +143,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 🔥 STUDENT ROUTES
+      // ================= STUDENT =================
       {
         path: "student/dashboard",
         element: (
@@ -157,14 +152,32 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path:'/student/profile',
+        element:(
+          <ProtectedRoute role="student">
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path:'/student/courses',
+        element:(
+          <ProtectedRoute role="student">
+            <Corse />
+          </ProtectedRoute>
+        ),
+      }
     ],
   },
 
+  // ================= AUTH =================
   {
     path: "/login",
     element: <LoginPage />,
   },
 
+  // ================= NOT FOUND =================
   {
     path: "*",
     element: <NotFoundPage />,

@@ -266,11 +266,11 @@ const Sidebar = () => {
         name: "My Learning",
         children: [
           { name: "Courses", path: "/student/courses" },
-          { name: "Tasks", path: "/student/tasks" },
         ],
       },
 
       { name: "Profile", path: "/student/profile" },
+      
     ],
   };
 
@@ -323,7 +323,7 @@ const Sidebar = () => {
 
                 {openMenu === item.name && (
                   <ul className="ml-4 mt-1 space-y-1">
-                    {item.children.map((sub) => (
+                    {item?.children.map((sub) => (
                       <li key={sub.path}>
                         <NavLink
                           to={sub.path}
