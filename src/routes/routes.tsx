@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import LoginPage from "../pages/LoginPage";
 import MainLayout from "../components/utils/MainLayout";
@@ -18,112 +19,154 @@ import CreateRegisterCorse from "../pages/admin/academinManagement/CreateRegiste
 import AllRegister from "../pages/admin/academinManagement/AllRegister";
 import CrateTeacher from "../pages/admin/academinManagement/CrateTeacher";
 
-
-
 export const router = createBrowserRouter([
   {
     path: "/",
-    element:<ProtectedRoute><MainLayout /></ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
 
     children: [
       // 🔥 ADMIN ROUTES
       {
-        
         path: "admin/dashboard",
-        element:<AdminDashboard />
-        
+        element: (
+          <ProtectedRoute role="admin">
+            <AdminDashboard />
+          </ProtectedRoute>
+        ),
       },
-      {
-        path: "/admin/all-semester",
-        element: <AcademinSemester />
-      },
-      {
-        path:'/admin/create-semester',
-        element:<CreateSemesterForm />
-      },
-      {
-        path:'/admin/create-department',
-        element:<CreateDepartMent />
-      },
-      {
-        path:'/admin/create-student',
-        element:<CreateStudnet />
-      },
-      {
-        path:"/admin/all-Student",
-        element:<Students />
-      },
-      {
-        path:"/admin/create-corse",
-        element:<CreateCorse />
-      },
-      {
-        path:"/admin/create-offer-corse",
-        element:<CreateOfferCorse />
-      },
-      {
-        path:"/admin/create-register-corse",
-        element:<CreateRegisterCorse />
-      },
-      {
-        path:"/admin/all-registers",
-        element:<AllRegister />
-      },
-      {
-        path:"/admin/create-teacher",
-        element:<CrateTeacher />
-      },
-  
 
-      // // 🔥 FACULTY ROUTES
       {
-        path: "/faculity/dashboard",
-        element: <FacalitiDeshboard />,
+        path: "admin/all-semester",
+        element: (
+          <ProtectedRoute role="admin">
+            <AcademinSemester />
+          </ProtectedRoute>
+        ),
       },
+
       {
-        path:'/admin/create-FAcality',
-        element:<CreateAcademinFacality />
-
+        path: "admin/create-semester",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateSemesterForm />
+          </ProtectedRoute>
+        ),
       },
-      // {
-      //   path: "faculty/courses",
-      //   element: <FacultyCourses />,
-      // },
-      // {
-      //   path: "faculty/assignments/create",
-      //   element: <CreateAssignment />,
-      // },
-      // {
-      //   path: "faculty/students",
-      //   element: <FacultyStudents />,
-      // },
 
-      // // 🔥 STUDENT ROUTES
+      {
+        path: "admin/create-department",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateDepartMent />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/create-student",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateStudnet />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/all-Student",
+        element: (
+          <ProtectedRoute role="admin">
+            <Students />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/create-corse",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateCorse />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/create-offer-corse",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateOfferCorse />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/create-register-corse",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateRegisterCorse />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/all-registers",
+        element: (
+          <ProtectedRoute role="admin">
+            <AllRegister />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/create-teacher",
+        element: (
+          <ProtectedRoute role="admin">
+            <CrateTeacher />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/create-FAcality",
+        element: (
+          <ProtectedRoute role="admin">
+            <CreateAcademinFacality />
+          </ProtectedRoute>
+        ),
+      },
+
+      // 🔥 FACULTY ROUTES
+      {
+        path: "faculity/dashboard",
+        element: (
+          <ProtectedRoute role="faculty">
+            <FacalitiDeshboard />
+          </ProtectedRoute>
+        ),
+      },
+
+      // 🔥 STUDENT ROUTES
       {
         path: "student/dashboard",
-        element: <StudentDeshboard />,
+        element: (
+          <ProtectedRoute role="student">
+            <StudentDeshboard />
+          </ProtectedRoute>
+        ),
       },
-      // {
-      //   path: "student/courses",
-      //   element: <StudentCourses />,
-      // },
-      // {
-      //   path: "student/tasks",
-      //   element: <StudentTasks />,
-      // },
-      // {
-      //   path: "student/profile",
-      //   element: <StudentProfile />,
-      // },
     ],
-    
   },
+
   {
-    path:'/login',
-    element:<LoginPage />
+    path: "/login",
+    element: <LoginPage />,
   },
+
   {
-    path:'*',
-    element:<NotFoundPage />
-  }
+    path: "*",
+    element: <NotFoundPage />,
+  },
 ]);
