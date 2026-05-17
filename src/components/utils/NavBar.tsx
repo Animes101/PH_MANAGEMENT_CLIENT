@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { userCurrentUser } from "../../redux/fetures/auth/authSlice";
+import { useApppSelector } from "../../redux/middlwere/hooks";
 
 type Role = "admin" | "faculty" | "student";
 
@@ -7,7 +9,14 @@ const Sidebar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   // 🔥 test role (later Redux/API)
-  const role: Role = "admin";
+
+    // ✅ Redux থেকে current user
+  const currentUser = useApppSelector(userCurrentUser);
+
+  console.log(currentUser)
+
+  // ✅ Dynamic Role
+  const role = currentUser?.role as Role;
 
   const toggleMenu = (menu: string) => {
     setOpenMenu(openMenu === menu ? null : menu);
@@ -39,8 +48,6 @@ const Sidebar = () => {
       { name: "Create Teacher", path: "/admin/create-teacher" },
     ],
   },
-
-  { name: "Reports", path: "/admin/reports" },
   { name: "Settings", path: "/admin/settings" },
 ],
 
